@@ -2,14 +2,12 @@
 from tensorflow import keras
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 import cv2 as cv
 
 #loading dataset
 (x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
-print("Preprocessing:")
-print(x_train.shape)
-print(x_test.shape)
 
 #Data pre-processing
 #Normalization of images. Making sure all images are reshaped into uniform range
@@ -23,7 +21,7 @@ x_train2 = x_train.reshape((nsamples, nx * ny * nrgb))
 nsamples, nx, ny, nrgb = x_test.shape
 x_test2 = x_test.reshape((nsamples, nx * ny * nrgb))
 
-print("Post Processing:")
-print(x_train2.shape)
-print(x_test2.shape)
-
+model = RandomForestClassifier()
+model.fit(x_train2, y_train.ravel())
+y_pred = model.predict(x_test2)
+print(y_pred)
