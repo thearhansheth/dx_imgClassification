@@ -28,6 +28,7 @@ x_test2 = x_test.reshape((nsamples, nx * ny * nrgb))
 ## Random Forest
 model = RandomForestClassifier()
 model.fit(x_train2, y_train)
+'''
 y_pred = model.predict(x_test2)
 
 print("Accuracy Score Random Forest: ", accuracy_score(y_pred, y_test))
@@ -54,15 +55,15 @@ nb = GaussianNB()
 nb.fit(x_train2, y_train)
 y_pred4 = nb.predict(x_test2)
 print("Accuracy Score Naive Bayes: ", accuracy_score(y_pred4, y_test))
-
+'''
 
 #Load custom input image
-img = cv.imread("/Users/arhan.sheth/Documents/Codes/DX/dx_imgClassification/customInput.jpeg")
+img = cv.imread("/Users/arhan.sheth/Documents/Codes/DX/dx_imgClassification/bird.jfif")
 
 #process image
-img_arr = img.resize(img, (32, 32))
+img_arr = cv.resize(img, (32, 32))
 nx, ny, nrgb = img_arr.shape
-img_arr2 = img.reshape(1, (nx * ny * nrgb))
+img_arr2 = img_arr.reshape(1, (nx * ny * nrgb))
 
 #declare classes for comparision 
 classes = ["airplane", "automobile", "bird", "cat", "deet", "frog", "horse", "ship", "truck"]
