@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 import numpy as np
 import cv2 as cv
 
@@ -38,3 +39,10 @@ knn = KNeighborsClassifier(n_neighbors = 7)
 knn.fit(x_train2, y_train)
 y_pred2 = knn.predict(x_test2)
 print("Accuracy Score KNN: ", accuracy_score(y_pred2, y_test))
+
+
+## Decision Tree
+dtc = DecisionTreeClassifier()
+dtc.fit(x_train2, y_train)
+y_pred3 = dtc.predict(x_test2)
+print("Accuracy Score Decision Tree: ", accuracy_score(y_pred3, y_test))
