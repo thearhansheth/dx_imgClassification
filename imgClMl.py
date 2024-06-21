@@ -3,6 +3,7 @@ from tensorflow import keras
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 import cv2 as cv
 
@@ -24,4 +25,7 @@ x_test2 = x_test.reshape((nsamples, nx * ny * nrgb))
 model = RandomForestClassifier()
 model.fit(x_train2, y_train.ravel())
 y_pred = model.predict(x_test2)
-print(y_pred)
+
+print("Accuracy Score: ", accuracy_score(y_pred, y_test))
+print("Classification Report: ", classification_report(y_pred, y_test))
+print("Confusion Matrix: ", confusion_matrix(y_pred, y_test))
