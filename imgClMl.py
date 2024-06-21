@@ -5,6 +5,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.naive_bayes import GaussianNB
 import numpy as np
 import cv2 as cv
 
@@ -46,3 +47,10 @@ dtc = DecisionTreeClassifier()
 dtc.fit(x_train2, y_train)
 y_pred3 = dtc.predict(x_test2)
 print("Accuracy Score Decision Tree: ", accuracy_score(y_pred3, y_test))
+
+
+## Naive Bayes
+nb = GaussianNB()
+nb.fit(x_train2, y_train)
+y_pred4 = nb.predict(x_test2)
+print("Accuracy Score Naive Bayes: ", accuracy_score(y_pred4, y_test))
