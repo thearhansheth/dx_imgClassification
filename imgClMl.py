@@ -2,8 +2,8 @@
 from tensorflow import keras
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 import cv2 as cv
 
@@ -14,6 +14,7 @@ import cv2 as cv
 #Normalization of images. Making sure all images are reshaped into uniform range
 x_train = x_train/255.0
 x_test = x_test/255.0
+y_train = y_train.ravel()
 
 #Converting into 2d arrays since scikit learn except 2d array model for .fit()
 nsamples, nx, ny, nrgb = x_train.shape
@@ -22,10 +23,18 @@ x_train2 = x_train.reshape((nsamples, nx * ny * nrgb))
 nsamples, nx, ny, nrgb = x_test.shape
 x_test2 = x_test.reshape((nsamples, nx * ny * nrgb))
 
+## Random Forest
 model = RandomForestClassifier()
-model.fit(x_train2, y_train.ravel())
+model.fit(x_train2, y_train)
 y_pred = model.predict(x_test2)
 
-print("Accuracy Score: ", accuracy_score(y_pred, y_test))
-print("Classification Report: ", classification_report(y_pred, y_test))
-print("Confusion Matrix: ", confusion_matrix(y_pred, y_test))
+print("Accuracy Score Random Forest: ", accuracy_score(y_pred, y_test))
+#print("Classification Report: ", classification_report(y_pred, y_test))
+#print("Confusion Matrix: ", confusion_matrix(y_pred, y_test))
+
+
+## KNN
+knn = KNeighborsClassifier(n_neighbors = 7)
+knn.fit(x_train2, y_train)
+y_pred2 = knn.predict(x_test2)
+print("Accuracy Score KNN: ", accuracy_score(y_pred2, y_test))
