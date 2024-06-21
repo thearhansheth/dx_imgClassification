@@ -54,3 +54,18 @@ nb = GaussianNB()
 nb.fit(x_train2, y_train)
 y_pred4 = nb.predict(x_test2)
 print("Accuracy Score Naive Bayes: ", accuracy_score(y_pred4, y_test))
+
+
+#Load custom input image
+img = cv.imread("/Users/arhan.sheth/Documents/Codes/DX/dx_imgClassification/customInput.jpeg")
+
+#process image
+img_arr = img.resize(img, (32, 32))
+nx, ny, nrgb = img_arr.shape
+img_arr2 = img.reshape(1, (nx * ny * nrgb))
+
+#declare classes for comparision 
+classes = ["airplane", "automobile", "bird", "cat", "deet", "frog", "horse", "ship", "truck"]
+ans = model.predict(img_arr2)
+#print the class of the predicted
+print("Predicted Class: ", classes[ans[0]]) 
