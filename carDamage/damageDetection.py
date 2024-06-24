@@ -27,6 +27,9 @@ for image_batch, labels_batch in train_ds:
   #print("Labels Batch Shape:", labels_batch.shape)
   break
 
+train_image = train_image.numpy()
+train_label = train_label.numpy()
+
 
 for image_batch, labels_batch in validation_ds:
   test_image = image_batch
@@ -35,10 +38,19 @@ for image_batch, labels_batch in validation_ds:
   #print(labels_batch.shape)
   break
 
+test_image = test_image.numpy()
+test_label = test_label.numpy()
+
 #Converting into 2d arrays for scikit-learn
 nsamples, nx, ny, nrgb = train_image.shape
-train_image2 = train_image.reshape((nsamples, nx * ny * nrgb))
+train_image2 = train_image.reshape(nsamples, (nx * ny * nrgb))
 
 nsamples, nx, ny, nrgb = test_image.shape
-test_image2 = test_image.reshape((nsamples, nx * ny * nrgb))
+test_image2 = test_image.reshape(nsamples, (nx * ny * nrgb))
 
+# Loading Random Forest Model
+rF = RandomForestClassifier()
+rF.fit(train_image2, train_label)
+# Making prediction using Random Forest
+rF_pred = rF.predict(test_image2)
+print("Accuracy Score:", accuracy_score(rF_pred, test_label))
