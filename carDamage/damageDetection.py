@@ -25,6 +25,20 @@ validation_ds = tf.keras.utils.image_dataset_from_directory(
     directory='data3a/validation',
     )
 
+#preprocessing for validation data
+#Convert dataset into list to obtain all batches
+validation_list = list(validation_ds)
+
+#extract image and label
+for image_batch, labels_batch in validation_list:
+  validation_image = image_batch
+  validation_label = labels_batch
+  break
+
+#converting all to numpy format for better adaptability
+validation_image = validation_image.numpy()
+validation_label = validation_label.numpy()
+
 train_list = list(train_ds1)
 test_list = list(test_ds)
 
@@ -50,11 +64,18 @@ test_image = test_image.numpy()
 test_label = test_label.numpy()
 
 #Converting into 2d arrays for scikit-learn
+# Converting train data
 nsamples, nx, ny, nrgb = train_image.shape
 train_image2 = train_image.reshape(nsamples, (nx * ny * nrgb))
 
+# Converting test data
 nsamples, nx, ny, nrgb = test_image.shape
 test_image2 = test_image.reshape(nsamples, (nx * ny * nrgb))
+
+
+#Converting Validation data into 2d Array
+nsamples, nx, ny, nrgb = validation_image.shape
+validation_image2 = validation_image.reshape(nsamples, (nx * ny * nrgb))
 
 # Loading Random Forest Model
 rF = RandomForestClassifier()
@@ -83,3 +104,17 @@ nb.fit(train_image2, train_label)
 # Making prediction using Naive Bayes
 nb_pred = nb.predict(test_image2)
 print("Accuracy Score Naive Bayes:", accuracy_score(nb_pred, test_label))
+
+
+#Making predictions for validation data
+rF_val_pred = rF.predict(validation_image2)
+print("Accuracy Report Random Forest (Validation):", accuracy_score(rF_val_pred, validation_label))
+
+knn_val_pred = knn.predict(validation_image2)
+print("Accuracy Report KNN (Validation):", accuracy_score(knn_val_pred, validation_label))
+
+dt_val_pred = dt.predict(validation_image2)
+print("Accuracy Report Decision Tree (Validation):", accuracy_score(dt_val_pred, validation_label))
+
+nb_val_pred = nb.predict(validation_image2)
+print("Accuracy Report Naive Bayes (Validation):", accuracy_score(nb_val_pred, validation_label))
