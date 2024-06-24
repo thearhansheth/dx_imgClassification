@@ -1,5 +1,5 @@
 #importing required packages onto virtual env
-from tensorflow import keras
+import tensorflow as tf
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.neighbors import KNeighborsClassifier
@@ -10,17 +10,26 @@ import numpy as np
 import cv2 as cv
 
 #Loading datasets from local directory
-train_ds = keras.utils.image_dataset_from_directory(
+train_ds = tf.keras.utils.image_dataset_from_directory(
     directory='data3a/training',
     )
 
-validation_ds = keras.utils.image_dataset_from_directory(
+# Calculate the total number of samples in the dataset
+total_samples = tf.data.experimental.cardinality(train_ds).numpy()
+train_size = int(0.8 * total_samples)
+# Split the dataset into training and testing sets
+train_ds1 = train_ds.take(train_size)
+test_ds = train_ds.skip(train_size)
+
+validation_ds = tf.keras.utils.image_dataset_from_directory(
     directory='data3a/validation',
     )
 
+train_list = list(train_ds1)
+test_list = list(test_ds)
 
 #using variables to store batch data for easier access
-for image_batch, labels_batch in train_ds:
+for image_batch, labels_batch in train_list:
   train_image = image_batch
   #print("Image Batch Shape:", image_batch.shape)
   train_label = labels_batch
@@ -30,8 +39,7 @@ for image_batch, labels_batch in train_ds:
 train_image = train_image.numpy()
 train_label = train_label.numpy()
 
-
-for image_batch, labels_batch in validation_ds:
+for image_batch, labels_batch in test_list:
   test_image = image_batch
   #print(image_batch.shape)
   test_label = labels_batch
