@@ -25,7 +25,16 @@ validation_ds = keras.utils.image_dataset_from_directory(
 
 
 for image_batch, labels_batch in train_ds:
-  print("Image Batch Shape:", image_batch.shape)
-  print("Labels Batch Shape:", labels_batch.shape)
+  train_image = image_batch
+  #print("Image Batch Shape:", image_batch.shape)
+  train_label = labels_batch
+  #print("Labels Batch Shape:", labels_batch.shape)
   break
 
+
+for image_batch, labels_batch in validation_ds:
+  test_image = image_batch
+  #print(image_batch.shape)
+  test_label = labels_batch
+  #print(labels_batch.shape)
+  break
