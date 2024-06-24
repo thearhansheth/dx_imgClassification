@@ -54,3 +54,17 @@ rF.fit(train_image2, train_label)
 # Making prediction using Random Forest
 rF_pred = rF.predict(test_image2)
 print("Accuracy Score:", accuracy_score(rF_pred, test_label))
+
+# Loading KNN Model
+knn = KNeighborsClassifier(n_neighbors = 5)
+knn.fit(train_image2, train_label)
+# Making prediction using KNN
+knn_pred = knn.predict(test_image2)
+print("Accuracy Score:", accuracy_score(knn_pred, test_label)) 
+
+# Loading Decision Tree Model
+dt = DecisionTreeClassifier()
+dt.fit(train_image2, train_label)
+# Making prediction using Decision Tree
+dt_pred = dt.predict(test_image2)
+print("Accuracy Score:", accuracy_score(dt_pred, test_label))
