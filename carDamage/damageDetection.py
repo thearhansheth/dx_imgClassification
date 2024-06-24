@@ -42,4 +42,3 @@ train_image2 = train_image.reshape((nsamples, nx * ny * nrgb))
 nsamples, nx, ny, nrgb = test_image.shape
 test_image2 = test_image.reshape((nsamples, nx * ny * nrgb))
 
-# Loading Random Forest Model
