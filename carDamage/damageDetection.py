@@ -9,12 +9,7 @@ from sklearn.naive_bayes import GaussianNB
 import numpy as np
 import cv2 as cv
 
-#train_path = "/Users/arhan.sheth/Documents/Codes/DX/dx_imgClassification/carDamage/data3a/training"
-#test_path = "/Users/arhan.sheth/Documents/Codes/DX/dx_imgClassification/carDamage/data3a/validation"
-
-#(x_train, y_train) = train_path.load_data()
-#(x_test, y_test) = test_path.load_data()
-
+#Loading datasets from local directory
 train_ds = keras.utils.image_dataset_from_directory(
     directory='data3a/training',
     )
@@ -24,6 +19,7 @@ validation_ds = keras.utils.image_dataset_from_directory(
     )
 
 
+#using variables to store batch data for easier access
 for image_batch, labels_batch in train_ds:
   train_image = image_batch
   #print("Image Batch Shape:", image_batch.shape)
@@ -38,3 +34,12 @@ for image_batch, labels_batch in validation_ds:
   test_label = labels_batch
   #print(labels_batch.shape)
   break
+
+#Converting into 2d arrays for scikit-learn
+nsamples, nx, ny, nrgb = train_image.shape
+train_image2 = train_image.reshape((nsamples, nx * ny * nrgb))
+
+nsamples, nx, ny, nrgb = test_image.shape
+test_image2 = test_image.reshape((nsamples, nx * ny * nrgb))
+
+# Loading Random Forest Model
