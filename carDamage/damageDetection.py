@@ -148,3 +148,22 @@ classes = ["minor", "moderate", "severe"]
 ans = loaded_model.predict(img_arr2)
 #print the class of the predicted
 print("Predicted Class: ", classes[ans[0]]) 
+
+### Extra Image
+#Load custom input image
+img2 = cv.imread("/Users/arhan.sheth/Documents/Codes/DX/dx_imgClassification/carDamage/damageInput.jpg")
+
+#process image
+img_arr2 = cv.resize(img2, (256, 256))
+nx, ny, nrgb = img_arr2.shape
+#print(f"Inference image resized shape: {img_arr.shape}")
+#print("nx:", nx, "ny:", ny, "nrgb:", nrgb)
+#print("Total:", (nx * ny * nrgb))
+img_arr3 = img_arr2.reshape(1, (nx * ny * nrgb))
+#print(f"Inference image reshaped shape: {img_arr2.shape}")
+
+#declare classes for comparision 
+classes = ["minor", "moderate", "severe"]
+ans2 = loaded_model.predict(img_arr3)
+#print the class of the predicted
+print("Predicted Class: ", classes[ans2[0]]) 
